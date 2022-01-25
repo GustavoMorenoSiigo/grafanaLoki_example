@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp_log
+  name: webapplog
   labels:
-    app: webapp_log
+    app: webapplog
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webapp_log
+      app: webapplog
   template:
     metadata:
       labels:
-        app: webapp_log
+        app: webapplog
     spec:
       containers:
-      - name: webapp_log
-        image: webapp_log:latest
+      - name: webapplog
+        image: webapplog:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 80
@@ -33,27 +33,27 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp_log-service
+  name: webapplog-service
 spec:
  type: LoadBalancer
  ports:
  - port: 80
  selector:
-   app: webapp_log
+   app: webapplog
 
 ---
 
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: webapp_log-ingress
+  name: webapplog-ingress
   labels:
-    app: webapp_log-ingress
+    app: webapplog-ingress
 spec:
   rules:
   - http:
       paths:
       - path: /
         backend:
-          serviceName: webapp_log-service
+          serviceName: webapplog-service
           servicePort: 80
